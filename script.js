@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleResultValidation() {
         let roundWon = false;
+        let winningLine = [];
+
         for (let i = 0; i <= 7; i++) {
             const winCondition = winningConditions[i];
             const a = board[winCondition[0]];
@@ -62,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             if (a === b && b === c) {
                 roundWon = true;
+                winningLine = winCondition;
                 break;
             }
         }
@@ -69,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (roundWon) {
             statusElement.innerText = `Winner: ${currentPlayer}`;
             isGameActive = false;
+            highlightWinningCells(winningLine);
             return;
         }
 
@@ -82,9 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
         handlePlayerChange();
     }
 
+    function highlightWinningCells(winningLine) {
+        winningLine.forEach(index => {
+            cells[index].classList.add('win-cell');
+        });
+    }
+
     function handlePlayerChange() {
         currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
         statusElement.innerText = `Turn: ${currentPlayer}`;
+        boardElement.setAttribute('data-turn', currentPlayer);
 
         if (gameMode === 'pvc' && currentPlayer === 'O' && isGameActive) {
             setTimeout(makeComputerMove, 500); // Add a small delay for realism
@@ -114,9 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
         isGameActive = true;
         currentPlayer = 'X';
         statusElement.innerText = `Turn: X`;
+        boardElement.setAttribute('data-turn', 'X');
         cells.forEach(cell => {
             cell.innerText = '';
-            cell.classList.remove('x', 'o');
+            cell.classList.remove('x', 'o', 'win-cell');
         });
     }
 
