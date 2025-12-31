@@ -1,6 +1,8 @@
 // Screen Elements
-const startScreen = document.getElementById('start-screen');
+const mainMenu = document.getElementById('main-menu');
+const modeSelection = document.getElementById('mode-selection');
 const gameScreen = document.getElementById('game-screen');
+const exitScreen = document.getElementById('exit-screen');
 
 // Game Elements
 const boardElement = document.getElementById('board');
@@ -8,7 +10,13 @@ const statusElement = document.getElementById('status');
 const resetBtn = document.getElementById('reset-btn');
 const backBtn = document.getElementById('back-btn');
 const cells = document.querySelectorAll('.cell');
-const menuBtns = document.querySelectorAll('.menu-btn');
+const menuBtns = document.querySelectorAll('.menu-btn'); // This selects all buttons with .menu-btn class
+
+// Specific Menu Buttons
+const mainStartBtn = document.getElementById('main-start-btn');
+const mainExitBtn = document.getElementById('main-exit-btn');
+const modeBackBtn = document.getElementById('mode-back-btn');
+const exitReloadBtn = document.getElementById('exit-reload-btn');
 
 let board = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'X';
@@ -204,25 +212,54 @@ function handleRestartGame() {
 
 function startGame(selectedMode) {
     gameMode = selectedMode;
-    startScreen.classList.add('hidden');
+    modeSelection.classList.add('hidden');
     gameScreen.classList.remove('hidden');
     handleRestartGame();
 }
 
-function returnToMenu() {
+function showModeSelection() {
+    mainMenu.classList.add('hidden');
+    modeSelection.classList.remove('hidden');
+}
+
+function showMainMenu() {
     gameScreen.classList.add('hidden');
-    startScreen.classList.remove('hidden');
+    modeSelection.classList.add('hidden');
+    exitScreen.classList.add('hidden');
+    mainMenu.classList.remove('hidden');
+}
+
+function handleExit() {
+    mainMenu.classList.add('hidden');
+    exitScreen.classList.remove('hidden');
+}
+
+function returnToModeSelection() {
+    gameScreen.classList.add('hidden');
+    modeSelection.classList.remove('hidden');
     handleRestartGame(); // Optional: reset board when leaving
 }
 
 // Event Listeners
 cells.forEach(cell => cell.addEventListener('click', handleCellClick));
 resetBtn.addEventListener('click', handleRestartGame);
-backBtn.addEventListener('click', returnToMenu);
+backBtn.addEventListener('click', showModeSelection); // Back from Game -> Mode Selection
 
+// Main Menu Listeners
+mainStartBtn.addEventListener('click', showModeSelection);
+mainExitBtn.addEventListener('click', handleExit);
+
+// Mode Selection Listeners
+modeBackBtn.addEventListener('click', showMainMenu); // Back from Mode -> Main Menu
+exitReloadBtn.addEventListener('click', showMainMenu); // Play Again -> Main Menu
+
+// Mode Buttons (PvP, PvC)
 menuBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const mode = e.target.getAttribute('data-mode');
-        startGame(mode);
-    });
+    // We only want to attach this to actual mode buttons, not the other nav buttons
+    if (btn.hasAttribute('data-mode')) {
+        btn.addEventListener('click', (e) => {
+            const mode = e.target.getAttribute('data-mode');
+            startGame(mode);
+        });
+    }
 });

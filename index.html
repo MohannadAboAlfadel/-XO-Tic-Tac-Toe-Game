@@ -13,11 +13,18 @@
     <div class="container">
         <h1>XO Game</h1>
         
-        <!-- Start Screen -->
-        <div id="start-screen">
+        <!-- Main Menu -->
+        <div id="main-menu">
+            <button id="main-start-btn" class="menu-btn">Start Game</button>
+            <button id="main-exit-btn" class="menu-btn exit-btn">Exit</button>
+        </div>
+
+        <!-- Mode Selection Screen -->
+        <div id="mode-selection" class="hidden">
             <p class="subtitle">Choose Game Mode</p>
             <button class="menu-btn" data-mode="pvp">Player vs Player</button>
             <button class="menu-btn" data-mode="pvc">Player vs Computer</button>
+            <button id="mode-back-btn" class="menu-btn secondary-btn">Back</button>
         </div>
 
         <!-- Game Screen -->
@@ -38,6 +45,13 @@
                 <button id="reset-btn">Reset Game</button>
                 <button id="back-btn">Back to Menu</button>
             </div>
+        </div>
+
+        <!-- Exit Screen -->
+        <div id="exit-screen" class="hidden">
+            <p class="subtitle">Thanks for playing!</p>
+            <p>See you next time!</p>
+            <button id="exit-reload-btn" class="menu-btn">Play Again</button>
         </div>
     </div>
     <script src="script.js"></script>
