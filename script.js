@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameScreen = document.getElementById('game-screen');
     
     // Game Elements
+    const boardElement = document.getElementById('board');
     const statusElement = document.getElementById('status');
     const resetBtn = document.getElementById('reset-btn');
     const backBtn = document.getElementById('back-btn');
