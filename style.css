@@ -238,6 +238,13 @@ h1 {
     transform: translateY(-2px);
 }
 
+.footer {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 1px;
+}
+
 @media (max-width: 450px) {
     .board {
         grid-template-columns: repeat(3, 80px);
